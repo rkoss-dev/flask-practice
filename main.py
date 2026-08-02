@@ -41,7 +41,7 @@ class User(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    order_date = db.Column(db.DateTime, default=datetime.now(datetime.UTC))
+    order_date = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     products = db.relationship(
