@@ -163,16 +163,19 @@ def create_product():
         return jsonify({"error": "Invalid product data."}), 400
 
 
-@app.route("/products", methods=["GET"])
-def get_products():
-    products = Product.query.all()
-    return products_schema.jsonify(products), 200
-
-
 @app.route("/products/<int:id>", methods=["GET"])
 def get_product(id):
+    product = Product.query.get_or_404(id)
+    return product_schema.jsonify(product), 200
+
+
+@app.route("/products", methods=["GET"])
+def get_products():
+
     page = request.args.get("page", 1, type=int)
+
     per_page = request.args.get("per_page", 5, type=int)
+
     paginated_products = Product.query.paginate(
         page=page, per_page=per_page, error_out=False
     )
